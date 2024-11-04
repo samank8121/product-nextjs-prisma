@@ -1,4 +1,8 @@
 ## Getting Started
+create .env file with these keys:
+ - CONNECTION_STRING //connection string
+ - NEXT_PUBLIC_API_ADDRESS //address of api. for local use this: http://localhost:3000/api/
+
 yarn dev
 
 ## Run Test
@@ -15,9 +19,7 @@ This project is a sample application built with Next.js 14.2.9. It demonstrates 
 - Metadata for SEO and page information.
 - Progressive Web App (PWA) capabilities.
 
-## Graphql Branch
-There is a graphql branch that connects to the backend listed below. This branch includes more complex GraphQL implementations compared to the main branch.
-Github: [Graphql Branch](https://github.com/samank8121/next-sample/tree/graphql)
-
 ## Backend
-For the backend, refer to this project on my GitHub: [Graphql Server](https://github.com/samank8121/next-graphql-server)
+Nextjs Route Handler
+Prisma for ORM
+PostgreSql for Db
