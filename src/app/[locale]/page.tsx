@@ -14,11 +14,13 @@ export async function generateMetadata(
   const t = await getTranslations('Home');
   return generateMetadataHelper(t('title'), t('description'), parentMetadata);
 }
-export default function Home() {
+export default async function Home() {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_ADDRESS}/products`);
+  const products = await response.json();
   return (
     <main className={styles.main}>
-      <ProductAutoComplete />
-      <ProductList />
+      <ProductAutoComplete products={products} />
+      <ProductList products={products}/>
     </main>
   );
 }

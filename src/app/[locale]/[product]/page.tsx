@@ -10,10 +10,7 @@ import IncreaseDecrease from '@/components/increase-decrease/increase-decrease';
 import { useTranslations } from 'next-intl';
 import { useCart } from '@/shared/hooks/useCart';
 import { useQuery } from '@tanstack/react-query';
-import { GetProductsType } from '@/types/ProductType';
-// import { GET_PRODUCTS } from '@/shared/graphql/products';
-// import request from 'graphql-request';
-import { Products } from '@/shared/data/products';
+import { ProductType } from '@/types/ProductType';
 
 export default function Product({
   params,
@@ -22,14 +19,12 @@ export default function Product({
 }) {
   const t = useTranslations('Product');
   const { changeProduct, getProductCount } = useCart();
-  const { data, isLoading } = useQuery<GetProductsType>({
+  const { data, isLoading } = useQuery<{product: ProductType}>({
     queryKey: [queryKeys.product, params.product],
     queryFn: async () => {
-      // request(process.env.NEXT_PUBLIC_API_ADDRESS!, GET_PRODUCTS, {
-      //   slug: params.product,
-      // }),
-      const res = Products.filter((p) => p.slug === params.product);
-      return { products: res };
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_ADDRESS}products?slug=${params.product}`);
+      const data = await response.json();      
+      return { product: data.products };
     },
   });
 
@@ -41,7 +36,7 @@ export default function Product({
     return null;
   }
   const { id, caption, imageSrc, rate, price, weight, description } =
-    data.products[0];
+    data.product;
   return (
     <div className={styles.product}>
       <div className={styles.imageContainer}>

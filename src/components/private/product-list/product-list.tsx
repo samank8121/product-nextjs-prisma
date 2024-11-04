@@ -6,23 +6,21 @@ import styles from './product-list.module.css';
 import { useCart } from '@/shared/hooks/useCart';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/shared/constant';
-// import { GET_PRODUCTS } from '@/shared/graphql/products';
-// import request from 'graphql-request';
 import { GetProductsType } from '@/types/ProductType';
-import { Products } from '@/shared/data/products';
 
-const ProductList = () => {
+const ProductList = ({
+  products,
+}: {
+  products: GetProductsType;
+}) => {
   const { changeProduct, getProductCount } = useCart();
   const { data, isLoading } = useQuery<GetProductsType>({
     queryKey: [queryKeys.products],
-    queryFn: async () => {
-      // request(
-      //   process.env.NEXT_PUBLIC_API_ADDRESS!,
-      //   GET_PRODUCTS,
-      // ),
-      return { products: Products };
+    queryFn: () => {           
+      return products;
     },
   });
+  console.log(data);
   const onChangeProduct = (productid: number, value: number) => {
     changeProduct(productid, value);
   };

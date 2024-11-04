@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("CONNECTION_STRING")
+}
+
+model cart {
+  id           Int            @id(map: "PK_c524ec48751b9b5bcfbf6e59be7") @default(autoincrement())
+  userId       Int
+  createdAt    DateTime       @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime       @default(now()) @db.Timestamp(6)
+  cart_product cart_product[]
+}
+
+model cart_product {
+  id           Int     @id(map: "PK_dccd1ec2d6f5644a69adf163bc1") @default(autoincrement())
+  productCount Int     @default(1)
+  cartId       Int
+  productId    Int
+  cart         cart    @relation(fields: [cartId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_139f8024067696fe5a8400ebda2")
+  product      product @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_4f1b0c66f4e0b4610e14ca42e5c")
+}
+
+model product {
+  id           Int            @id(map: "PK_bebc9158e480b949565b4dc7a82") @default(autoincrement())
+  caption      String         @db.VarChar
+  price        Decimal        @db.Decimal
+  slug         String         @db.VarChar
+  weight       String         @db.VarChar
+  rate         Int
+  description  String         @db.VarChar
+  imageSrc     String         @db.VarChar
+  createdAt    DateTime       @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime       @default(now()) @db.Timestamp(6)
+  cart_product cart_product[]
+}
+
+model user {
+  id        Int      @id(map: "PK_cace4a159ff9f2512dd42373760") @default(autoincrement())
+  username  String   @unique(map: "UQ_78a916df40e02a9deb1c4b75edb") @db.VarChar
+  email     String   @unique(map: "UQ_e12875dfb3b1d92d7d7c5377e22") @db.VarChar
+  password  String   @db.VarChar
+  cartId    String?  @db.VarChar
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @db.Timestamp(6)
+}

@@ -12,9 +12,6 @@ import { useTranslations } from 'next-intl';
 import IncreaseDecrease from '../increase-decrease/increase-decrease';
 import { useCart } from '@/shared/hooks/useCart';
 import { GetProductsType } from '@/types/ProductType';
-// import { GET_PRODUCTS } from '@/shared/graphql/products';
-// import request from 'graphql-request';
-import { Products } from '@/shared/data/products';
 
 const CartModal = () => {
   const t = useTranslations('Cart');
@@ -29,8 +26,9 @@ const CartModal = () => {
   const { data: products } = useQuery<GetProductsType>({
     queryKey: [queryKeys.products],
     queryFn: async () => {
-      //request(process.env.NEXT_PUBLIC_API_ADDRESS!, GET_PRODUCTS),
-      return { products: Products };
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_ADDRESS}/products`);
+      const products = await response.json();
+      return products;
     },
   });
   const setClose = () => {
