@@ -1,0 +1,14 @@
+{
+  "Validation":{
+    "General":
+    {
+      "required":"{param} is required"
+    },      
+    "Product":{
+      "duplicate": "Product with same slug exists",
+      "price": "price must be a float",
+      "rate": "rate must be a positive integer",
+      "imageSrc":"image address must follow the format '/images/products/filename.jpg'"
+    }   
+  }
+}

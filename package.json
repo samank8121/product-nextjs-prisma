@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.8",
+    "@pinecone-database/pinecone": "^4.0.0",
     "@prisma/client": "^5.21.1",
     "@tanstack/react-query": "^5.51.21",
     "clsx": "^2.1.1",
@@ -20,9 +21,11 @@
     "graphql-request": "^7.1.0",
     "next": "14.2.9",
     "next-intl": "^3.17.0",
+    "openai": "^4.71.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^5.2.1"
+    "react-icons": "^5.2.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "1.6.1",
