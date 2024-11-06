@@ -4,4 +4,5 @@ export const queryKeys = {
     product: 'product',
     cart: 'cart',
     cartModal: 'cart-modal',
+    chatBot: 'chat-bot',
 }

@@ -4,15 +4,20 @@ import { getEmbedding } from '@/shared/utils/openai';
 import { productIndex } from '@/shared/data/pinecone';
 import { streamText } from 'ai';
 import { openai } from '@ai-sdk/openai';
+import { getTranslations } from 'next-intl/server';
+import { getLocale } from '@/shared/utils/getLocale';
 
 export interface Message {
   role: 'user' | 'assistant' | 'system';
   content: string;
 }
 
-export async function POST(requeset: NextRequest) {
+export async function POST(request: NextRequest) {
+  const locale = getLocale(request.headers.get('accept-language'));
+  const te = await getTranslations({ locale, namespace: 'Error' });
+  const tchat = await getTranslations({ locale, namespace: 'Chat' });
   try {
-    const body = await requeset.json();
+    const body = await request.json();
     const messages: Message[] = body.messages;
 
     const messagesTruncated = messages.slice(-6);
@@ -21,25 +26,24 @@ export async function POST(requeset: NextRequest) {
       messagesTruncated.map((message) => message.content).join('\n')
     );
 
-    const vectorQueryResponse = await productIndex.query({
-      vector: embedding,
-      topK: 6,
-    });
+    const vectorQueryResponse = await productIndex
+      .namespace('product-ns')
+      .query({
+        vector: embedding,
+        topK: 6,
+      });
 
-    const relevanProducts = await prisma.product.findMany({
+    const relevantProducts = await prisma.product.findMany({
       where: {
         slug: {
           in: vectorQueryResponse.matches.map((match) => match.id),
         },
       },
     });
-
     const systemMessage: Message = {
       role: 'system',
-      content:
-        "You are an intelligent e-commerce app. You answer the user's question based on their existing products. " +
-        'The relevant product for this query are:\n' +
-        relevanProducts
+      content: tchat('productAssistant') +
+        relevantProducts
           .map(
             (product) =>
               `Caption: ${product.caption}\n\nRate: ${product.rate}\n\nDescription: ${product.description}\n`
@@ -52,9 +56,9 @@ export async function POST(requeset: NextRequest) {
       messages:[systemMessage, ...messagesTruncated],
     });
 
-  return result.toDataStreamResponse();
+    return result.toDataStreamResponse();
   } catch (error) {
     console.error(error);
-    return Response.json({ error: 'Internal server error' }, { status: 500 });
+    return Response.json({ error: te('errorOccured') }, { status: 500 });
   }
 }

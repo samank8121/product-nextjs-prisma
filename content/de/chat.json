@@ -1,0 +1,11 @@
+{
+  "Chat": {
+    "empty": "Ask about products",
+    "thinking": "Thinking...",
+    "clear": "Clear",
+    "search": "Type here...",
+    "send": "Send",
+    "productAssistant":"You are an intelligent e-commerce app. You answer the user's question based on their existing products. Good product has higher rate. The relevant product for this query are:\n"
+  }
+}
+

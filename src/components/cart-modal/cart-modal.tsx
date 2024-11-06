@@ -8,7 +8,7 @@ import { euro, queryKeys } from '@/shared/constant';
 import styles from './cart-modal.module.css';
 import commonQueryClient from '@/shared/getQueryClient';
 import { ModalCartType } from '@/types/ModalTypes';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import IncreaseDecrease from '../increase-decrease/increase-decrease';
 import { useCart } from '@/shared/hooks/useCart';
 import { GetProductsType } from '@/types/ProductType';
@@ -16,7 +16,7 @@ import { GetProductsType } from '@/types/ProductType';
 const CartModal = () => {
   const t = useTranslations('Cart');
   const { changeProduct } = useCart();
-  
+  const locale = useLocale();
   const { data } = useQuery<CartType>({
     queryKey: [queryKeys.cart],
   });
@@ -26,7 +26,14 @@ const CartModal = () => {
   const { data: products } = useQuery<GetProductsType>({
     queryKey: [queryKeys.products],
     queryFn: async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_ADDRESS}/products`);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_ADDRESS}/products`,
+        {
+          headers: {
+            'Accept-Language': locale,
+          },
+        }
+      );
       const products = await response.json();
       return products;
     },

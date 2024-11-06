@@ -4,12 +4,14 @@ import { NextRequest } from 'next/server';
 import { getTranslations } from 'next-intl/server';
 import { getEmbedding } from '@/shared/utils/openai';
 import { productIndex } from '@/shared/data/pinecone';
+import { getLocale } from '@/shared/utils/getLocale';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
-  const slug = searchParams.get('slug');
-
-  try {
+  const slug = searchParams.get('slug');  
+  const locale = getLocale(request.headers.get('accept-language'));
+  const t = await getTranslations({ locale, namespace: 'Error' });
+  try {    
     const products = slug
       ? await prisma.product.findFirst({ where: { slug } })
       : await prisma.product.findMany();
@@ -20,7 +22,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error(error);
     await prisma.$disconnect();
-    return new Response(JSON.stringify({ error: 'An error occurred' }), {
+    return new Response(JSON.stringify({ error:t('errorOccured') }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
@@ -28,8 +30,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    const locale = request.headers.get('accept-language') || 'en';
+  const locale = getLocale(request.headers.get('accept-language'));
+  const te = await getTranslations({ locale, namespace: 'Error' });
+  try {    
     const t = await getTranslations({ locale, namespace: 'Validation' });
     const body = await request.json();
 
@@ -62,7 +65,7 @@ export async function POST(request: NextRequest) {
     return new Response(JSON.stringify({ productResult }), { status: 201 });
   } catch (error) {
     console.error(error);
-    return new Response(JSON.stringify({ error: 'Internal server error' }), { status: 500 });
+    return new Response(JSON.stringify({ error: te('errorOccured') }), { status: 500 });
   }
 }
 

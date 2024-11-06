@@ -1,0 +1,38 @@
+.chatBotIcon
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 170px;
+    right: 50px;
+    border-radius: 222px;
+    background-color: white;
+    width: 100px;
+    height: 100px;
+    z-index: 10;   
+    border: 5px solid #536493;   
+}
+@media (max-width: 576px) {
+    .chatBotIcon {
+        bottom: 25px;
+        right: 25px;
+    }
+  }
+.chatBotIcon .items {
+    position: absolute;
+    background-color: #FFF1DB;
+    color:#876f5e;
+    right: 18px;
+    top: 10px;
+    font-weight: 500;
+    padding: 3px;
+    border-radius: 5px;
+
+}
+.chatBotIcon svg
+{
+    width: 40px;
+    height: 40px;
+    color: #EF5A6F;
+}

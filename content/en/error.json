@@ -1,0 +1,7 @@
+{
+  "Error": {
+      "errorOccured": "An error occurred",
+      "internalError": "Internal server error",
+      "somethingWrong":"Something wrong. Please try again."
+  }
+}
