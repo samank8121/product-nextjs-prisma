@@ -20,7 +20,6 @@ const ProductList = ({
       return products;
     },
   });
-  console.log(data);
   const onChangeProduct = (productid: number, value: number) => {
     changeProduct(productid, value);
   };

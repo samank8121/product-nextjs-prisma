@@ -1,5 +1,4 @@
 export const getLocale = (acceptLanguage: string | null) => {
-  console.log("acceptLanguage:", acceptLanguage);
   if (acceptLanguage) {
     const languages = acceptLanguage
       .split(',')
