@@ -1,7 +1,7 @@
 {
   "Error": {
-      "errorOccured": "An error occurred",
-      "internalError": "Internal server error",
-      "somethingWrong":"Something wrong. Please try again."
+      "errorOccured": "Es ist ein Fehler aufgetreten",
+      "internalError": "Interner Serverfehler",
+      "somethingWrong":"Etwas ist falsch. Bitte versuchen Sie es erneut."
   }
 }
