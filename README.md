@@ -14,6 +14,7 @@ yarn test
 ## Stories
 yarn storybook
 
+
 ## Project OverView
 This project is a sample application built with Next.js 14.2.9. It demonstrates how to display a list of products in multiple languages. which product's description and rate are indexed to find by chatbots
 
@@ -28,3 +29,6 @@ This project is a sample application built with Next.js 14.2.9. It demonstrates 
 - OpenAI for embeding and pinecone for saving as vector
 - Prisma as ORM
 - PostgreSql as Db
+
+## Inspired By
+This code is inspired by: [codinginflow](https://github.com/codinginflow/nextjs-ai-note-app)
