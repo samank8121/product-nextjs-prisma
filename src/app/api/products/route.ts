@@ -69,6 +69,35 @@ export async function POST(request: NextRequest) {
   }
 }
 
+export async function DELETE(request: NextRequest) {
+  const locale = getLocale(request.headers.get('accept-language'));
+  const te = await getTranslations({ locale, namespace: 'Error' });
+ 
+  try {    
+    const body = await request.json();
+    const { slug } = body;
+
+    const existingProduct = await prisma.product.findFirst({ where: { slug } });
+    if (!existingProduct) {
+      return new Response(JSON.stringify({ error: te('itemNotExists') }), { status: 400 });
+    }
+    const tp = await getTranslations({ locale, namespace: 'Product' });
+    const productResult = await prisma.$transaction(async (tx) => {
+      const product = await tx.product.delete({ where: { id: existingProduct.id } });
+
+      await productIndex.namespace('product-ns').deleteOne(product.slug);
+
+      return product;
+    });
+
+    return new Response(JSON.stringify({ message: tp('deleted',  { caption: productResult.caption } ) }), { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return new Response(JSON.stringify({ error: te('errorOccured') }), { status: 500 });
+  }
+
+}
+
 async function getEmbeddingForProduct(caption: string, rate: number, description: string) {
   return getEmbedding(`caption:${caption}\n\nrate:${rate}\n\ndescription:${description}`);
 }

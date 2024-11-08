@@ -1,6 +1,7 @@
 {
   "Product":{
     "add": "Hinzufügen",
-    "outofStock": "Nicht auf Lager"
+    "outofStock": "Nicht auf Lager",
+    "deleted": "Produkt {caption} wird gelöscht"
   }
 }

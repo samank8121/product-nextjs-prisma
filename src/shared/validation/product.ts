@@ -7,7 +7,8 @@ export const createProductSchema = (t: any) =>
       .min(1, { message: t('General.required', { param: 'caption' }) }),
     price: z
       .number()
-      .refine((value) => Number.isFinite(value) && !Number.isInteger(value), {
+      .positive({ message: t('Product.price') })
+      .refine((value) => Number.isFinite(value), {
         message: t('Product.price'),
       }),
     slug: z

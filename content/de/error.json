@@ -2,6 +2,7 @@
   "Error": {
       "errorOccured": "Es ist ein Fehler aufgetreten",
       "internalError": "Interner Serverfehler",
-      "somethingWrong":"Etwas ist falsch. Bitte versuchen Sie es erneut."
+      "somethingWrong":"Etwas ist falsch. Bitte versuchen Sie es erneut.",
+      "itemNotExists": "Artikel nicht vorhanden"
   }
 }

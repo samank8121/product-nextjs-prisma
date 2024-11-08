@@ -1,6 +1,7 @@
 {
   "Product":{
     "add": "Add",
-    "outofStock": "Out of Stock"
+    "outofStock": "Out of Stock",
+    "deleted": "Product {caption} is deleted"
   }
 }
