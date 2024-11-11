@@ -4,6 +4,9 @@
     z-index: 20;
     width: 100%;
     max-width: 500px;
+    background-color: #f9fafb;    
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
     padding: 10px;
   }
   
@@ -16,8 +19,15 @@
   }
   .chaBot .close
   {
-    margin-bottom: 10px;
+    margin: 10px 0px 0px 10px;
     display: block;
+    border: none;
+    background: none;
+    color: var(--primary-600);
+  }
+  .chaBot .close svg {
+    width: 26px;
+    height: 26px;
   }
   .chaBot .content
   {
@@ -25,9 +35,7 @@
     flex-direction: column;
     height: 600px;
     border-radius: 10px;
-    border: 1px solid #e5e7eb;
-    background-color: #1a202c;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+   
   }
   .chaBot .scroll
   {
@@ -43,6 +51,7 @@
     justify-content: center;
     align-items: center;
     height:100%;
+    color: var(--primary-600);
   }
   .chaBot .form
   {
@@ -55,12 +64,27 @@
   {
     padding: 0 5px;
     width: 80%;
+    border-radius: 5px;
+    background-color: var(--primary-300);
+  }
+  .chaBot .form .input::placeholder
+  {
+    color:whitesmoke;
   }
   .chaBot .messageContainer{
     display: flex;
     align-items: center;
     gap:5px;
     margin-bottom:30px;
+  }
+  .chaBot .messageContainer svg{
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    max-width: 20px;
+    max-height: 20px;
+    color: var(--primary-300);
   }
   .chaBot .messageContainer.start {
     justify-content: flex-start;
@@ -74,8 +98,12 @@
     background-color: #f9fafb;
     color: #1a202c;
     white-space: pre-line;
-    padding: 5px;
+    padding: 10px;
     border-radius:10px;
+  }
+  .chaBot .messageContainer .message a{
+    color: #0000EE;
+    text-decoration: underline;
   }
   
   

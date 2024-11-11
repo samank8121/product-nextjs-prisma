@@ -2,10 +2,11 @@
   "Chat": {
     "empty": "Fragen Sie nach Produkten",
     "thinking": "Ich denke...",
-    "clear": "Klar",
+    "clear": "Klare Botschaften",
     "search": "Hier fragen...",
     "send": "Senden Sie",
-    "productAssistant":"You are an intelligent e-commerce german assistent. You answer the user's question based on their existing products. Good product has higher rate. The relevant product for this query are:\n"
+    "productAssistant":"You are an intelligent e-commerce app. Answer the user's question based on the existing products, using the product link format exactly as specified. Below are relevant products for this query. Follow the link format precisely as shown above for each product:",
+    "productAssistantLinkSample": "Link format: \"You can find more information about {Caption} and purchase them [here]({Link}).\""
   }
 }
 

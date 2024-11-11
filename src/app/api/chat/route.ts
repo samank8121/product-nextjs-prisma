@@ -42,18 +42,19 @@ export async function POST(request: NextRequest) {
     });
     const systemMessage: Message = {
       role: 'system',
-      content: tchat('productAssistant') +
+      content:
+        tchat('productAssistant') +
         relevantProducts
           .map(
             (product) =>
-              `Caption: ${product.caption}\n\nRate: ${product.rate}\n\nDescription: ${product.description}\n`
+              `Caption: ${product.caption}\n\nRate: ${product.rate}\n\nDescription: ${product.description}\n\nLink: ${getDomain(locale, product.slug)}`
           )
-          .join('\n\n'),
+          .join('\n\n') +  tchat('productAssistantLinkSample'),
     };
 
     const result = await streamText({
       model: openai('gpt-3.5-turbo'),
-      messages:[systemMessage, ...messagesTruncated],
+      messages: [systemMessage, ...messagesTruncated],
     });
 
     return result.toDataStreamResponse();
@@ -62,3 +63,6 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: te('errorOccured') }, { status: 500 });
   }
 }
+const getDomain = (locale: string, slug: string) => {
+  return `${process.env.DOMAIN}${locale}/${slug}`;
+};

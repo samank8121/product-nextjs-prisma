@@ -30,12 +30,12 @@
 }
 
 .button-variant-filled {
-  background: var(--primary-500);
+  background: var(--primary-300);
   color: #fff;
 }
 
 .button-variant-filled:active {
-  background: var(--primary-500);
+  background: var(--primary-300);
 }
 
 .button-variant-filled:disabled,
@@ -45,14 +45,14 @@
 }
 
 .button-variant-outlined {
-  border: 1px solid var(--primary-500);
+  border: 1px solid var(--primary-300);
   color: #007bff;
   background-color: #fff;
 }
 
 .button-variant-outlined:active {
-  color: var(--primary-500);
-  border-color: var(--primary-500);
+  color: var(--primary-300);
+  border-color: var(--primary-300);
 }
 
 .button-variant-outlined:disabled,
@@ -63,7 +63,7 @@
 
 .button-variant-elevated {
   background: #e0f7fa; 
-  color: var(--primary-500);
+  color: var(--primary-300);
 }
 
 .button-variant-elevated:active {
@@ -120,7 +120,7 @@
 
 .button.loading {
   background: #bbdefb;
-  color: var(--primary-500);
+  color: var(--primary-300);
   padding-inline-end: 50px;
 }
 

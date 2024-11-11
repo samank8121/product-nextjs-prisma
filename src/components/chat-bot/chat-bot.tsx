@@ -112,6 +112,15 @@ const ChatMessage = ({
   message: Pick<Message, 'role' | 'content'>;
 }) => {
   const isAiMessage = role === 'assistant';
+  const convertMarkdownLinksToHtml = (msg: string) => {
+    const markdownLinkPattern = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+
+    const htmlResponse = msg.replace(
+      markdownLinkPattern,
+      '<a href="$2">here</a>'
+    );
+    return htmlResponse;
+  };
 
   return (
     <div
@@ -120,8 +129,11 @@ const ChatMessage = ({
         isAiMessage ? styles.start : styles.end
       )}
     >
-      {isAiMessage && <FiServer size='50' />}
-      <p className={styles.message}>{content}</p>
+      {isAiMessage && <FiServer />}
+      <p
+        className={styles.message}
+        dangerouslySetInnerHTML={{ __html: convertMarkdownLinksToHtml(content) }}
+      />
       {!isAiMessage && <FiUser />}
     </div>
   );
