@@ -84,7 +84,7 @@ const CartModal = () => {
                 />
               </span>
               <span>
-                {p[1] * price} {euro}
+                {(p[1] * price).toFixed(2)} {euro}
               </span>
             </div>
           );
