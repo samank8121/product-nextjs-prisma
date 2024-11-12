@@ -3,7 +3,7 @@
 import { Message } from 'ai';
 import { useChat } from 'ai/react';
 import React, { useEffect, useRef } from 'react';
-import { FiTrash2, FiUser, FiServer, FiX } from 'react-icons/fi';
+import { FiTrash2, FiUser, FiX } from 'react-icons/fi';
 import clsx from 'clsx';
 import Button from '../button/button';
 import { queryKeys } from '@/shared/constant';
@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import commonQueryClient from '@/shared/getQueryClient';
 import styles from './chat-bot.module.css';
 import { useTranslations } from 'next-intl';
+import Robot from '@/assets/user-robot.svg'
 
 const ChatBot = () => {
   const t = useTranslations('Chat');
@@ -79,7 +80,7 @@ const ChatBot = () => {
           )}
           {!error && messages.length === 0 && (
             <div className={styles.empty}>
-              <FiServer />
+              <Robot/>
               {t('empty')}
             </div>
           )}
@@ -129,7 +130,7 @@ const ChatMessage = ({
         isAiMessage ? styles.start : styles.end
       )}
     >
-      {isAiMessage && <FiServer />}
+      {isAiMessage && <Robot className={styles.robot}/>}
       <p
         className={styles.message}
         dangerouslySetInnerHTML={{ __html: convertMarkdownLinksToHtml(content) }}

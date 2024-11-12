@@ -2,11 +2,11 @@
 
 import clsx from 'clsx';
 import React from 'react';
-import { FiServer  } from 'react-icons/fi';
 import styles from './chat-bot-icon.module.css';
 import Span from '../clickable-span/clickable-span';
 import { queryKeys } from '@/shared/constant';
 import commonQueryClient from '@/shared/getQueryClient';
+import Robot from '@/assets/user-robot.svg'
 
 export type ChatbotIconProps = {
   className?: string;
@@ -21,7 +21,7 @@ const ChatbotIcon: React.FC<ChatbotIconProps> = ({
 
   return (
     <Span className={clsx(styles.chatBotIcon, className)} onClick={onClick}>
-      <FiServer />      
+      <Robot />      
     </Span>
   );
 };

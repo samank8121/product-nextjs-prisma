@@ -53,6 +53,18 @@
     height:100%;
     color: var(--primary-600);
   }
+  .chaBot .empty svg
+  {
+    width:20px;
+    height:20px;
+    fill: var(--primary-600);
+  }
+  .chaBot .empty svg path
+  {
+    stroke: var(--primary-600);
+    stroke-width: 0.5;
+  }
+  
   .chaBot .form
   {
     display: flex;
@@ -85,6 +97,14 @@
     max-width: 20px;
     max-height: 20px;
     color: var(--primary-300);
+    
+  }
+  .chaBot .messageContainer .robot{
+    fill: var(--primary-100);
+  }
+  .chaBot .messageContainer .robot path{
+    stroke: var(--primary-100);
+    stroke-width: 0.4;
   }
   .chaBot .messageContainer.start {
     justify-content: flex-start;

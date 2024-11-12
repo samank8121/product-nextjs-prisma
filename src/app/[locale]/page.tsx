@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './page.module.css';
 
-import ProductList from '@/components/private/product-list/product-list';
-import ProductAutoComplete from '@/components/private/product-auto-complate';
+import ProductList from '@/components/product-list/product-list';
+import ProductAutoComplete from '@/components/product-auto-complete/product-auto-complate';
 import { Metadata, ResolvingMetadata } from 'next';
 import { getLocale, getTranslations } from 'next-intl/server';
 import {

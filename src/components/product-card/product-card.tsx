@@ -34,6 +34,7 @@ const ProductCard: FC<ProductCardProps> = ({
       onChange(count);
     }
   };
+
   return (
     <>
       <div className={clsx(styles.card, className)}>
@@ -79,7 +80,7 @@ const ProductCard: FC<ProductCardProps> = ({
           </div>
           <div className={styles.priceContainer}>
             <span className={styles.price}>
-              {price === 0 ? t('outofStock') : price}
+              {Number(price) === 0 ? t('outofStock') : price}
             </span>
             {price !== 0 && <span className={styles.price}>{euro}</span>}
           </div>
