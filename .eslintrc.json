@@ -6,12 +6,41 @@
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
+  "settings": {
+    "boundaries/include": ["src/**/*"],
+    "react": {
+      "version": "detect"
+    },
+    "boundaries/elements": [
+      {
+        "mode": "full",
+        "type": "api",
+        "pattern": "src/app/api/**/*"
+      },
+      {
+        "mode": "full",
+        "type": "data",
+        "pattern": "src/shared/data/**/*"
+      }
+    ]
+  },
   "rules": {
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error"],
-    "@typescript-eslint/no-explicit-any": "off"
-
-  },
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "off",
+    "boundaries/element-types": [
+      "error",
+      {
+        "default": "disallow",
+        "rules": [
+          {
+            "from": "api",
+            "allow": ["data"]
+          }
+        ]
+      }
+    ]
+  },  
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -20,12 +49,8 @@
     "ecmaVersion": 2021,
     "sourceType": "module"
   },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
-  "plugins": ["react", "react-hooks", "@typescript-eslint"],
+ 
+  "plugins": ["boundaries", "react", "react-hooks", "@typescript-eslint"],
   "env": {
     "browser": true,
     "es2021": true
