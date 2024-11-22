@@ -1,5 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import { NextRequest, NextResponse } from 'next/server';
+import { errorResponse } from './api-utils';
 
 export interface AuthTokenPayload {
   userId: number;
@@ -9,13 +10,13 @@ export function auth(request: NextRequest): AuthTokenPayload | NextResponse {
   const authHeader = request.headers.get('Authorization');
 
   if (!authHeader) {
-    return NextResponse.json({ error: 'Authorization header missing' }, { status: 401 });
+    return errorResponse('Authorization header missing', 401);
   }
 
   const token = authHeader.split(' ')[1];
 
   if (!token) {
-    return NextResponse.json({ error: 'Invalid token format' }, { status: 401 });
+    return errorResponse('Invalid token format', 401);
   }
 
   try {
@@ -28,8 +29,8 @@ export function auth(request: NextRequest): AuthTokenPayload | NextResponse {
     return payload;
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {
-      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+      return errorResponse('Invalid token', 401);
     }
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return errorResponse('Internal server error');
   }
 }
