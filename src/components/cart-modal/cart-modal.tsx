@@ -3,15 +3,15 @@
 import React from 'react';
 import Modal from '../modal/modal';
 import { useQuery } from '@tanstack/react-query';
-import { CartType } from '@/types/CartType';
+import { CartType } from '@/types/cart-type';
 import { euro, queryKeys } from '@/shared/constant';
 import styles from './cart-modal.module.css';
-import commonQueryClient from '@/shared/getQueryClient';
-import { ModalCartType } from '@/types/ModalTypes';
+import commonQueryClient from '@/shared/get-query-client';
+import { ModalCartType } from '@/types/modal-types';
 import { useLocale, useTranslations } from 'next-intl';
 import IncreaseDecrease from '../increase-decrease/increase-decrease';
 import { useCart } from '@/shared/hooks/useCart';
-import { GetProductsType } from '@/types/ProductType';
+import { GetProductsType } from '@/types/product-type';
 
 const CartModal = () => {
   const t = useTranslations('Cart');

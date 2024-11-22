@@ -1,5 +1,5 @@
-import { CartType } from '@/types/CartType';
-import commonQueryClient from '../getQueryClient';
+import { CartType } from '@/types/cart-type';
+import commonQueryClient from '../get-query-client';
 import { queryKeys } from '../constant';
 import { useQuery } from '@tanstack/react-query';
 

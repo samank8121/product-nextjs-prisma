@@ -4,8 +4,12 @@ import { getEmbedding } from '@/shared/utils/openai';
 import { productIndex } from '@/shared/data/pinecone';
 import { streamText } from 'ai';
 import { openai } from '@ai-sdk/openai';
-import { getTranslations } from 'next-intl/server';
-import { getLocale } from '@/shared/utils/getLocale';
+import { 
+  getTranslationForNamespace, 
+  errorResponse,
+  getLocaleFromRequest,
+  getDomain
+} from '@/shared/utils/api-utils';
 
 export interface Message {
   role: 'user' | 'assistant' | 'system';
@@ -13,13 +17,12 @@ export interface Message {
 }
 
 export async function POST(request: NextRequest) {
-  const locale = getLocale(request.headers.get('accept-language'));
-  const te = await getTranslations({ locale, namespace: 'Error' });
-  const tchat = await getTranslations({ locale, namespace: 'Chat' });
-  try {
-    const body = await request.json();
-    const messages: Message[] = body.messages;
+  const locale = getLocaleFromRequest(request);
+  const te = await getTranslationForNamespace(request, 'Error');
+  const tchat = await getTranslationForNamespace(request, 'Chat');
 
+  try {
+    const { messages }: { messages: Message[] } = await request.json();
     const messagesTruncated = messages.slice(-6);
 
     const embedding = await getEmbedding(
@@ -40,6 +43,7 @@ export async function POST(request: NextRequest) {
         },
       },
     });
+
     const systemMessage: Message = {
       role: 'system',
       content:
@@ -49,7 +53,7 @@ export async function POST(request: NextRequest) {
             (product) =>
               `Caption: ${product.caption}\n\nRate: ${product.rate}\n\nDescription: ${product.description}\n\nLink: ${getDomain(locale, product.slug)}`
           )
-          .join('\n\n') +  tchat('productAssistantLinkSample'),
+          .join('\n\n') + tchat('productAssistantLinkSample'),
     };
 
     const result = await streamText({
@@ -60,9 +64,7 @@ export async function POST(request: NextRequest) {
     return result.toDataStreamResponse();
   } catch (error) {
     console.error(error);
-    return Response.json({ error: te('errorOccured') }, { status: 500 });
+    return errorResponse(te('errorOccured'));
   }
 }
-const getDomain = (locale: string, slug: string) => {
-  return `${process.env.DOMAIN}${locale}/${slug}`;
-};
+

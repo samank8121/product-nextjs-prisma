@@ -5,7 +5,7 @@ import React from 'react';
 import styles from './chat-bot-icon.module.css';
 import Span from '../clickable-span/clickable-span';
 import { queryKeys } from '@/shared/constant';
-import commonQueryClient from '@/shared/getQueryClient';
+import commonQueryClient from '@/shared/get-query-client';
 import Robot from '@/assets/user-robot.svg'
 
 export type ChatbotIconProps = {

@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import Button from '../button/button';
 import { queryKeys } from '@/shared/constant';
 import { useQuery } from '@tanstack/react-query';
-import commonQueryClient from '@/shared/getQueryClient';
+import commonQueryClient from '@/shared/get-query-client';
 import styles from './chat-bot.module.css';
 import { useTranslations } from 'next-intl';
 import Robot from '@/assets/user-robot.svg'

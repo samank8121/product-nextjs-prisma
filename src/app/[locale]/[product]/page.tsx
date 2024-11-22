@@ -10,7 +10,7 @@ import IncreaseDecrease from '@/components/increase-decrease/increase-decrease';
 import { useTranslations } from 'next-intl';
 import { useCart } from '@/shared/hooks/useCart';
 import { useQuery } from '@tanstack/react-query';
-import { ProductType } from '@/types/ProductType';
+import { ProductType } from '@/types/product-type';
 
 export default function Product({
   params,
