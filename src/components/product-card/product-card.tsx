@@ -6,7 +6,7 @@ import styles from './product-card.module.css';
 import Image from 'next/image';
 import { FiStar } from 'react-icons/fi';
 import IncreaseDecrease from '@/components/increase-decrease/increase-decrease';
-import { ProductType } from '@/types/ProductType';
+import { ProductType } from '@/types/product-type';
 import { useTranslations, useLocale } from 'next-intl';
 import { euro } from '@/shared/constant';
 import Link from 'next/link';

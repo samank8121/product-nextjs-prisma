@@ -8,7 +8,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import {
   generateMetadataHelper,
   GenerateMetadataProps,
-} from '@/shared/utils/generateMetadata';
+} from '@/shared/utils/generate-metadata';
 
 export async function generateMetadata(
   _: GenerateMetadataProps,

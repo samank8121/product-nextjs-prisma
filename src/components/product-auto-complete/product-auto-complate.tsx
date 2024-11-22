@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import Autocomplete from '@/components/auto-complete/auto-complete';
-import { GetProductsType, ProductType } from '@/types/ProductType';
-import commonQueryClient from '@/shared/getQueryClient';
+import { GetProductsType, ProductType } from '@/types/product-type';
+import commonQueryClient from '@/shared/get-query-client';
 import { queryKeys } from '@/shared/constant';
 
 export default function ProductAutoComplete({

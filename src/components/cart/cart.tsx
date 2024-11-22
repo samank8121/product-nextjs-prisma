@@ -7,8 +7,8 @@ import styles from './cart.module.css';
 import Span from '../clickable-span/clickable-span';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/shared/constant';
-import { CartType } from '@/types/CartType';
-import commonQueryClient from '@/shared/getQueryClient';
+import { CartType } from '@/types/cart-type';
+import commonQueryClient from '@/shared/get-query-client';
 export type EventStopPropagation = 'none' | 'click'|'touch'|'all';
 
 export type CartProps = {
