@@ -1,12 +1,21 @@
-import createMiddleware from 'next-intl/middleware';
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import createIntlMiddleware  from 'next-intl/middleware';
 
-const middleware = createMiddleware({
+const middleware = createIntlMiddleware ({
   locales: ['en', 'de'],
   defaultLocale: 'en'
 });
 
-export default middleware;
+const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)', '/:locale/api(.*)'])
+
+export default clerkMiddleware(async (auth, req) => {  
+  if (!isPublicRoute(req)) await auth.protect()
+
+  return middleware(req)
+})
+
 
 export const config = {
-  matcher: ['/', '/(de|en)/:page*']
+  matcher: [
+     '/', '/(de|en)/:page*', '/(api|trpc)(.*)']
 };
