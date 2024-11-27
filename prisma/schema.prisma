@@ -22,6 +22,7 @@ model cart_product {
   productId    Int
   cart         cart    @relation(fields: [cartId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_139f8024067696fe5a8400ebda2")
   product      product @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_4f1b0c66f4e0b4610e14ca42e5c")
+  @@unique([cartId, productId])
 }
 
 model product {
