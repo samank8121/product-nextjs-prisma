@@ -9,7 +9,7 @@ datasource db {
 
 model cart {
   id           Int            @id(map: "PK_c524ec48751b9b5bcfbf6e59be7") @default(autoincrement())
-  userId       Int
+  userId       String
   createdAt    DateTime       @default(now()) @db.Timestamp(6)
   updatedAt    DateTime       @default(now()) @db.Timestamp(6)
   cart_product cart_product[]
@@ -40,11 +40,32 @@ model product {
 }
 
 model user {
-  id        Int      @id(map: "PK_cace4a159ff9f2512dd42373760") @default(autoincrement())
-  username  String   @unique(map: "UQ_78a916df40e02a9deb1c4b75edb") @db.VarChar
-  email     String   @unique(map: "UQ_e12875dfb3b1d92d7d7c5377e22") @db.VarChar
-  password  String   @db.VarChar
+  id        String      @id @default(cuid())
+  name  String?
+  email     String? @unique
+  password  String?
   cartId    String?  @db.VarChar
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @default(now()) @db.Timestamp(6)
+  emailVerified DateTime? 
+  image         String?
+  accounts      Account[]
+}
+model Account {
+  id                String  @id @default(cuid())
+  userId            String   
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }

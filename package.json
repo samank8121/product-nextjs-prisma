@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.72",
+    "@auth/prisma-adapter": "^2.7.4",
     "@ducanh2912/next-pwa": "^10.2.8",
     "@pinecone-database/pinecone": "^4.0.0",
     "@prisma/client": "^5.21.1",
@@ -26,6 +27,7 @@
     "graphql-request": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.9",
+    "next-auth": "beta",
     "next-intl": "^3.17.0",
     "openai": "^4.71.0",
     "react": "^18",

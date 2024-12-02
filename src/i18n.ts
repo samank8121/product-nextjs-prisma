@@ -10,6 +10,7 @@ export default getRequestConfig(async ({ locale }) => {
     ...(await import(`../content/${locale}/product.json`)).default,
     ...(await import(`../content/${locale}/chat.json`)).default,
     ...(await import(`../content/${locale}/cart.json`)).default,
+    ...(await import(`../content/${locale}/auth.json`)).default,
     ...(await import(`../content/${locale}/validation.json`)).default,
     ...(await import(`../content/${locale}/error.json`)).default,
     ...(await import(`../content/${locale}/general.json`)).default,

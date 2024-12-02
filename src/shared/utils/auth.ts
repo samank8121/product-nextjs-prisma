@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { errorResponse } from './api-utils';
 
 export interface AuthTokenPayload {
-  userId: number;
+  userId: string;
 }
 
 export function auth(request: NextRequest): AuthTokenPayload | NextResponse {

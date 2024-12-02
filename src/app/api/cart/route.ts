@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function getOrCreateCart(tx: any, userId: number) {
+async function getOrCreateCart(tx: any, userId: string) {
   let cart = await tx.cart.findFirst({
     where: { userId },
     include: { cart_product: true },

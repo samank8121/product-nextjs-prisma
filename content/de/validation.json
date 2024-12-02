@@ -9,6 +9,11 @@
       "price": "der Preis muss ein Float sein",
       "rate": "rate muss eine positive ganze Zahl sein",
       "imageSrc":"Die Bildadresse muss das Format '/images/products/filename.jpg' haben."
-    }   
+    },
+    "Auth":{
+      "password": "Password must be 8 letter",
+      "rePassword": "Passwords must be same",
+      "email": "Email format is not correct"
+    }     
   }
 }
