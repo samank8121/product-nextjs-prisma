@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { startTransition, useState } from 'react';
 import styles from './page.module.css';
 import { useTranslations } from 'next-intl';
 import Input from '@/components/input/input';
 import Button from '@/components/button/button';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { login } from '@/app/actions/login';
 
 export default function Login() {
   const t = useTranslations('Login');
@@ -16,19 +17,15 @@ export default function Login() {
 
   const router = useRouter();
   const onLogin = async () => {
-    const variables = { username, password };
     try {
-      // const data = await request<AuthType>(
-      //   process.env.NEXT_PUBLIC_API_ADDRESS!,
-      //   LOGIN_MUTATION,
-      //   variables
-      // );
-      const data =  variables;
-      if(data){
-        
-          router.push('/');
-      }
-      
+      startTransition(() =>
+        login({ username, password }).then((data) => {
+          console.log('onLogin', data);
+          if (data.user?.id) {
+            router.push('/');
+          }
+        })
+      );      
     } catch (error) {
       setHasError(true);
       console.error(error);

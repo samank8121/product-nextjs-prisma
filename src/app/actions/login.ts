@@ -1,3 +1,5 @@
+'use server'
+
 import prisma from '@/shared/data/prisma';
 import * as jwt from 'jsonwebtoken';
 import argon2 from 'argon2';
@@ -9,9 +11,10 @@ export const login = async (values: LoginSchema) => {
     const t = await getTranslations({ locale: 'en', namespace: 'Validation' });
     const validatedFields = loginSchema(t).safeParse(values);
     if (!validatedFields.success) {
-      return { error: 'User not found' };
+      return { error: 'Enter correct username and pass' };
     }
     const { username, password } = validatedFields.data;
+    console.log('login',username, password );
     const user = await prisma.user.findFirst({ where: { email: username } });
     if (!user) {
       return { error: 'User not found' };
