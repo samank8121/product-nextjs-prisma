@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const loginSchema = (t: any) =>
+export const loginSchema = (t?: any) =>
   z.object({
     username: z
       .string({ message: t('General.required', { param: 'username' }) })

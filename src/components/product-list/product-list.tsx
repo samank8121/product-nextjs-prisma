@@ -7,12 +7,16 @@ import { useCart } from '@/shared/hooks/useCart';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/shared/constant';
 import { GetProductsType } from '@/types/product-type';
+import { useSession } from 'next-auth/react';
 
 const ProductList = ({
   products,
 }: {
   products: GetProductsType;
 }) => {
+  const session = useSession();
+
+  console.log('ProductList users session',session);
   const { changeProduct, getProductCount } = useCart();
   const { data, isLoading } = useQuery<GetProductsType>({
     queryKey: [queryKeys.products],
