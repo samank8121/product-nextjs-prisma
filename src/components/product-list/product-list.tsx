@@ -3,7 +3,7 @@
 import React from 'react';
 import ProductCard from '@/components/product-card/product-card';
 import styles from './product-list.module.css';
-import { useCart } from '@/shared/hooks/useCart';
+import { useCart } from '@/shared/hooks/cart';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/shared/constant';
 import { GetProductsType } from '@/types/product-type';

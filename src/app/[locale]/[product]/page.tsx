@@ -8,7 +8,7 @@ import { FiStar } from 'react-icons/fi';
 import clsx from 'clsx';
 import IncreaseDecrease from '@/components/increase-decrease/increase-decrease';
 import { useTranslations } from 'next-intl';
-import { useCart } from '@/shared/hooks/useCart';
+import { useCart } from '@/shared/hooks/cart';
 import { useQuery } from '@tanstack/react-query';
 import { ProductType } from '@/types/product-type';
 

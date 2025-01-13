@@ -10,7 +10,7 @@ import commonQueryClient from '@/shared/get-query-client';
 import { ModalCartType } from '@/types/modal-types';
 import { useLocale, useTranslations } from 'next-intl';
 import IncreaseDecrease from '../increase-decrease/increase-decrease';
-import { useCart } from '@/shared/hooks/useCart';
+import { useCart } from '@/shared/hooks/cart';
 import { GetProductsType } from '@/types/product-type';
 
 const CartModal = () => {
