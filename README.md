@@ -37,5 +37,5 @@ This project is a sample application built with Next.js 14.2.9. It demonstrates 
 - Prisma as ORM
 - PostgreSql as Db
 
-## Inspired By
-This code is inspired by: [codinginflow](https://github.com/codinginflow/nextjs-ai-note-app)
+## Video
+[Watch the video](https://www.linkedin.com/posts/samankefayatpour_ecommerce-ai-chatbot-activity-7262047243799592960-G15o?utm_source=share&utm_medium=member_desktop)
