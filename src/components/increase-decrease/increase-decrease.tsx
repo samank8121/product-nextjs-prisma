@@ -32,11 +32,13 @@ const IncreaseDecrease: React.FC<IncreaseDecreaseProps> = ({
   };
 
   return (
-    <div className={clsx(styles.increaseDecreaseContainer, className)}>
+    <div className={clsx(styles.increaseDecreaseContainer, className)}
+    data-test="increase-decrease-control">
       {value === 0 && (
         <Button
           size="l"
           name="Add"
+          data-test="increase-decrease-add"
           className={clsx(styles.addBtn, { [styles.addBtnText]: addBtnText })}
           onClick={() => {
             onChanging(1);
@@ -52,6 +54,7 @@ const IncreaseDecrease: React.FC<IncreaseDecreaseProps> = ({
             size="sm"
             className={styles.iconContainer}
             data-testid="decrease"
+            data-test="increase-decrease-decrease"
             onClick={() => {
               onChanging(value - 1);
             }}
@@ -63,11 +66,12 @@ const IncreaseDecrease: React.FC<IncreaseDecreaseProps> = ({
               )
             }
           />
-          <span className={styles.value}>{alternativeText ?? value}</span>
+          <span data-test="increase-decrease-value" className={styles.value}>{alternativeText ?? value}</span>
           <Button
             size="sm"
             className={styles.iconContainer}
             data-testid="increase"
+            data-test="increase-decrease-increase"
             onClick={() => {
               onChanging(value + 1);
             }}

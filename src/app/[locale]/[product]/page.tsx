@@ -38,9 +38,10 @@ export default function Product({
   const { id, caption, imageSrc, rate, price, weight, description } =
     data.product;
   return (
-    <div className={styles.product}>
-      <div className={styles.imageContainer}>
+    <div className={styles.product} data-test="product-container">
+      <div className={styles.imageContainer} data-test="product-image-container">
         <Image
+          data-test="product-image"
           src={imageSrc}
           alt={caption}
           fill
@@ -49,9 +50,9 @@ export default function Product({
         />
       </div>
       <div className={styles.info}>
-        <h1>{caption}</h1>
-        <div className={styles.weightRate}>
-          <span>{weight}</span>
+        <h1 data-test="product-title">{caption}</h1>
+        <div className={styles.weightRate} data-test="product-meta">
+          <span data-test="product-weight">{weight}</span>
           <span>|</span>
           <span
             className={clsx(styles.rateContainer, {
@@ -59,13 +60,13 @@ export default function Product({
             })}
           >
             <FiStar className={styles.star} />
-            <span className={styles.rate}>{rate}</span>
+            <span className={styles.rate} data-test="product-rating">{rate}</span>
           </span>
           <span>|</span>
-          <div className={styles.price}>{`${price} ${euro}`}</div>
+          <div className={styles.price} data-test="product-price">{`${price} ${euro}`}</div>
         </div>
         {price !== 0 ? (
-          <IncreaseDecrease
+          <IncreaseDecrease            
             className={styles.add}
             value={getProductCount(id)}
             addBtnText={t('add')}
@@ -78,6 +79,7 @@ export default function Product({
         )}
         <div
           className={styles.description}
+          data-test="product-description"
           dangerouslySetInnerHTML={{ __html: description ?? '' }}
         />
       </div>
