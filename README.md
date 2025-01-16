@@ -9,17 +9,24 @@
 3. yarn install & yarn dev
 
 ## Run Test
-yarn test
+```bash
+# unit tests
+$ yarn test
 
+# e2e test
+$ yarn cypress:open
+```
 ## Stories
-yarn storybook
-
+```bash
+$ yarn storybook
+```
 
 ## Project OverView
 This project is a sample application built with Next.js 14.2.9. It demonstrates how to display a list of products in multiple languages. which product's description and rate are indexed to find by chatbots
 
 ## Front-end
 - TanStack Query(React Query) for state management and caching.
+- Cypress and jest for testing
 - i18n for internationalization and translations.
 - Metadata for SEO and page information.
 - Progressive Web App (PWA) capabilities.
