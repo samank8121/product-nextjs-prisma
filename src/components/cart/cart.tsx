@@ -28,7 +28,7 @@ const Cart: React.FC<CartProps> = ({
   return (
     <Span className={clsx(styles.cart, className)} onClick={onClick}>
       <FiShoppingCart />
-      <span className={styles.items}>
+      <span className={styles.items} data-test="cart-count">
         {data && data.totalCount ? data.totalCount : 0}
       </span>
     </Span>
