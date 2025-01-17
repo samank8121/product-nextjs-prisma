@@ -11,6 +11,8 @@ import { fetchUtil } from '@/shared/utils/fetch-util';
 import commonQueryClient from '@/shared/get-query-client';
 import { useQuery } from '@tanstack/react-query';
 import { AuthInfo } from '@/types/auth-info';
+import { useLocale } from 'next-intl';
+import { getFieldErrorsAsString } from '@/shared/utils/get-field-errors';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -20,6 +22,7 @@ export default function Login() {
   const { data: auth } = useQuery<AuthInfo>({
     queryKey: [queryKeys.authInfo],
   });
+  const locale = useLocale();
   if (auth && auth.token) {
     router.push('/');
   }
@@ -28,15 +31,19 @@ export default function Login() {
     const data = { username, password };
     try {
       const response = await fetchUtil(
-        `${process.env.NEXT_PUBLIC_API_ADDRESS}/auth/login`,
-        { method: 'POST', data }
+        `${process.env.NEXT_PUBLIC_API_ADDRESS}auth/login`,
+        { method: 'POST', data, locale }
       );
       const responseJson = await response.json();
       if (response.ok) {
         commonQueryClient.setQueryData([queryKeys.authInfo], responseJson);
         router.push('/');
       } else {
-        setError(responseJson.error);
+        if (responseJson.error && responseJson.error.fieldErrors) {
+          setError(getFieldErrorsAsString(responseJson.error));
+        } else {
+          setError(responseJson.error);
+        }
       }
     } catch (error) {
       setError('error');
@@ -56,7 +63,7 @@ export default function Login() {
           type='password'
           onChange={(e) => setPassword(e.target.value)}
         />
-        {error && <span className={styles.error}>{error}</span>}
+        {error && <div className={styles.error} dangerouslySetInnerHTML={{ __html: error }}/>}
         <a href='./signup'>signUp</a>
         <Button className={styles.loginBtn} onClick={onLogin}>
           login

@@ -20,6 +20,9 @@
 }
 
 .login .container .error {
+  word-break: break-word;
+  padding: 0 20px;
+  width: 100%;
   color: rgb(241, 95, 95);
 }
 
