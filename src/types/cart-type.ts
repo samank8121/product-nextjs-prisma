@@ -1,4 +1,4 @@
 export type CartType = {
-    products: {[key:string]:number}; 
-    totalCount: number;
-  };
+  products: { [key: string]: number };
+  totalCount: number;
+};

@@ -6,10 +6,10 @@ import styles from './page.module.css';
 import Input from '@/components/input/input';
 import Button from '@/components/button/button';
 import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/shared/constant';
 import { fetchUtil } from '@/shared/utils/fetch-util';
 import commonQueryClient from '@/shared/get-query-client';
+import { useQuery } from '@tanstack/react-query';
 import { AuthInfo } from '@/types/auth-info';
 
 export default function Login() {
@@ -17,11 +17,10 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
-  const { data } = useQuery<AuthInfo>({
+  const { data: auth } = useQuery<AuthInfo>({
     queryKey: [queryKeys.authInfo],
   });
-
-  if (data && data.token) {
+  if (auth && auth.token) {
     router.push('/');
   }
 
@@ -36,9 +35,7 @@ export default function Login() {
       if (response.ok) {
         commonQueryClient.setQueryData([queryKeys.authInfo], responseJson);
         router.push('/');
-      }
-      else
-      {
+      } else {
         setError(responseJson.error);
       }
     } catch (error) {

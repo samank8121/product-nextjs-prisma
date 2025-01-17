@@ -19,7 +19,7 @@ export default function Product({
 }) {
   const t = useTranslations('Product');
   const { changeProduct, getProductCount } = useCart();
-  const { data, isLoading } = useQuery<{product: ProductType}>({
+  const { data, isLoading } = useQuery<{ product: ProductType }>({
     queryKey: [queryKeys.product, params.product],
     queryFn: async () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_ADDRESS}products?slug=${params.product}`);
@@ -38,10 +38,13 @@ export default function Product({
   const { id, caption, imageSrc, rate, price, weight, description } =
     data.product;
   return (
-    <div className={styles.product} data-test="product-container">
-      <div className={styles.imageContainer} data-test="product-image-container">
+    <div className={styles.product} data-test='product-container'>
+      <div
+        className={styles.imageContainer}
+        data-test='product-image-container'
+      >
         <Image
-          data-test="product-image"
+          data-test='product-image'
           src={imageSrc}
           alt={caption}
           fill
@@ -50,9 +53,9 @@ export default function Product({
         />
       </div>
       <div className={styles.info}>
-        <h1 data-test="product-title">{caption}</h1>
-        <div className={styles.weightRate} data-test="product-meta">
-          <span data-test="product-weight">{weight}</span>
+        <h1 data-test='product-title'>{caption}</h1>
+        <div className={styles.weightRate} data-test='product-meta'>
+          <span data-test='product-weight'>{weight}</span>
           <span>|</span>
           <span
             className={clsx(styles.rateContainer, {
@@ -60,13 +63,18 @@ export default function Product({
             })}
           >
             <FiStar className={styles.star} />
-            <span className={styles.rate} data-test="product-rating">{rate}</span>
+            <span className={styles.rate} data-test='product-rating'>
+              {rate}
+            </span>
           </span>
           <span>|</span>
-          <div className={styles.price} data-test="product-price">{`${price} ${euro}`}</div>
+          <div
+            className={styles.price}
+            data-test='product-price'
+          >{`${price} ${euro}`}</div>
         </div>
         {price !== 0 ? (
-          <IncreaseDecrease            
+          <IncreaseDecrease
             className={styles.add}
             value={getProductCount(id)}
             addBtnText={t('add')}
@@ -79,7 +87,7 @@ export default function Product({
         )}
         <div
           className={styles.description}
-          data-test="product-description"
+          data-test='product-description'
           dangerouslySetInnerHTML={{ __html: description ?? '' }}
         />
       </div>

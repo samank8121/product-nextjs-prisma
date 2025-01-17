@@ -21,7 +21,6 @@ export async function POST(request: NextRequest) {
     return jsonResponse({
       token,
       user: {
-        id: user.id,
         username: user.username,
         email: user.email,
       }
