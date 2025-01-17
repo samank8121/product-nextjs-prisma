@@ -2,6 +2,7 @@ import prisma from '@/shared/data/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/shared/utils/auth';
 import { errorResponse, jsonResponse } from '@/shared/utils/api-utils';
+import { CartType } from '@/types/cart-type';
 
 export async function GET(request: NextRequest) {
   const authResult = auth(request);
@@ -23,7 +24,17 @@ export async function GET(request: NextRequest) {
       },
     },
   });
-  return jsonResponse(response);
+  const cart: CartType = {
+    products: {},
+    totalCount: 0,
+  };
+  if (response) { 
+    response.cart_product.forEach((item) => {
+      cart.products[item.productId] = item.productCount;
+      cart.totalCount += item.productCount;
+    });
+  }
+  return jsonResponse(cart);
 }
 export async function POST(request: NextRequest) {
   try {
@@ -41,12 +52,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { productId, count } = await request.json();
-
+    const { productId, count } = await request.json();    
     const result = await prisma.$transaction(async (tx) => {
       const cart = await getOrCreateCart(tx, userId);
       const product = await getProduct(tx, productId);
-
       if (!product) {
         throw new Error('Product not found');
       }
@@ -56,7 +65,7 @@ export async function POST(request: NextRequest) {
       return await getUpdatedCart(tx, cart.id);
     });
 
-    return NextResponse.json(result);
+    return jsonResponse(result);
   } catch (error) {
     console.error('Error changing product in cart:', error);
     return errorResponse(

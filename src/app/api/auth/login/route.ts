@@ -1,13 +1,21 @@
 import { NextRequest } from 'next/server';
 import prisma from '@/shared/data/prisma';
-import { jsonResponse, errorResponse } from '@/shared/utils/api-utils';
+import { jsonResponse, errorResponse, getTranslationForNamespace } from '@/shared/utils/api-utils';
 import * as jwt from 'jsonwebtoken';
 import argon2 from 'argon2';
+import { loginSchema } from '@/shared/validation/auth';
 
 export async function POST(request: NextRequest) {
   try {
-    const { username, password } = await request.json();
-
+    const t = await getTranslationForNamespace(request, 'Validation');
+    const body = await request.json();
+    const parseResult = loginSchema(t).safeParse(body);
+    
+    if (!parseResult.success) {
+      console.log('Login validation error:', parseResult.error.message);
+      return errorResponse(parseResult.error.flatten(), 400);
+    }
+    const { username, password } = parseResult.data;
     const user = await prisma.user.findFirst({ where: { username } });
     if (!user) {
       return errorResponse('User not found', 404);
@@ -21,7 +29,6 @@ export async function POST(request: NextRequest) {
     return jsonResponse({
       token,
       user: {
-        id: user.id,
         username: user.username,
         email: user.email,
       }

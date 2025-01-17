@@ -14,7 +14,7 @@ export function jsonResponse(data: any, status: number = 200) {
     return NextResponse.json(data, { status });
 }
 
-export function errorResponse(error: string, status: number = 500) {
+export function errorResponse(error: string | object, status: number = 500) {
   return jsonResponse({ error }, status);
 }
 export function getDomain(locale: string, slug: string) {

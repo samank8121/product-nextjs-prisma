@@ -3,7 +3,6 @@
 import React from 'react';
 import Modal from '../modal/modal';
 import { useQuery } from '@tanstack/react-query';
-import { CartType } from '@/types/cart-type';
 import { euro, queryKeys } from '@/shared/constant';
 import styles from './cart-modal.module.css';
 import commonQueryClient from '@/shared/get-query-client';
@@ -15,11 +14,8 @@ import { GetProductsType } from '@/types/product-type';
 
 const CartModal = () => {
   const t = useTranslations('Cart');
-  const { changeProduct } = useCart();
+  const { carts, changeProduct } = useCart();
   const locale = useLocale();
-  const { data } = useQuery<CartType>({
-    queryKey: [queryKeys.cart],
-  });
   const { data: cartModal } = useQuery<ModalCartType>({
     queryKey: [queryKeys.cartModal],
   });
@@ -59,13 +55,13 @@ const CartModal = () => {
         <span>{t('count')}</span>
         <span>{t('totalPrice')}</span>
       </div>
-      {!(data && data.products) ||
-        (data && data.totalCount === 0 && (
+      {!(carts && carts.products) ||
+        (carts && carts.totalCount === 0 && (
           <span className={styles.empty}>There is nothing here!</span>
         ))}
-      {data &&
-        data.products && products &&
-        Object.entries(data.products).map((p) => {
+      {carts &&
+        carts.products && products &&
+        Object.entries(carts.products).map((p) => {
           const currProductId = Number(p[0]);
           const productInfo = products?.products.filter(
             (product) => product.id === currProductId

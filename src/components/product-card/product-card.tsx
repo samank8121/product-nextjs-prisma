@@ -46,7 +46,7 @@ const ProductCard: FC<ProductCardProps> = ({
           )}
         </div>
 
-        <Link className={styles.imageContainer} href={`${locale}/${slug}`}>
+        <Link className={styles.imageContainer} href={`${locale}/product/${slug}`}>
           <Image
             src={imageSrc}
             alt={caption}
