@@ -77,7 +77,6 @@ export const useCart = () => {
       );
       return true;
     }
-    console.log('changeProduct', response);
     return false;
   };
   const getProductCount = (productid: number): number => {

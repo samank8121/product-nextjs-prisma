@@ -77,7 +77,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             { [styles.filled]: !disabled },
             { [styles.disabled]: disabled }
           )}
-          tabIndex={0}
           role="button"
           {...(innerPlaceholder && {
             onClick: () => {

@@ -102,7 +102,6 @@ async function updateCartProduct(
   productId: number,
   count: number
 ) {
-  console.log('updateCartProduct', cartId, productId, count);
   if (count === 0) {
     await tx.cart_product.deleteMany({
       where: {

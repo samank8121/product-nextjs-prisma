@@ -18,7 +18,6 @@ export const fetchUtil = async (url: string, options: FetchUtilOptions = {}) => 
     method,
     headers,
   };
-  console.log('fetchOptions', fetchOptions);
   if (data) {
     fetchOptions.body = JSON.stringify(data);
   }
