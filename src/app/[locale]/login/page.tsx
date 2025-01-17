@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import React, { useState } from 'react';
@@ -11,7 +10,7 @@ import { fetchUtil } from '@/shared/utils/fetch-util';
 import commonQueryClient from '@/shared/get-query-client';
 import { useQuery } from '@tanstack/react-query';
 import { AuthInfo } from '@/types/auth-info';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { getFieldErrorsAsString } from '@/shared/utils/get-field-errors';
 
 export default function Login() {
@@ -19,6 +18,8 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
+  const t = useTranslations('Login');
+
   const { data: auth } = useQuery<AuthInfo>({
     queryKey: [queryKeys.authInfo],
   });
@@ -45,7 +46,7 @@ export default function Login() {
           setError(responseJson.error);
         }
       }
-    } catch (error) {
+    } catch {
       setError('error');
     }
   };
@@ -53,20 +54,25 @@ export default function Login() {
     <div className={styles.login}>
       <div className={styles.container}>
         <Input
-          label='username'
+          label={t('username')}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <Input
-          label='password'
+          label={t('password')}
           value={password}
           type='password'
           onChange={(e) => setPassword(e.target.value)}
         />
-        {error && <div className={styles.error} dangerouslySetInnerHTML={{ __html: error }}/>}
-        <a href='./signup'>signUp</a>
+        {error && (
+          <div
+            className={styles.error}
+            dangerouslySetInnerHTML={{ __html: error }}
+          />
+        )}
+        <a href='./signup'>{t('signUp')}</a>
         <Button className={styles.loginBtn} onClick={onLogin}>
-          login
+          {t('login')}
         </Button>
       </div>
     </div>
