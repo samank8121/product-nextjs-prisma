@@ -8,7 +8,7 @@ datasource db {
 }
 
 model cart {
-  id           Int            @id @default(autoincrement())
+  id           String            @id @default(cuid())
   userId       Int
   createdAt    DateTime       @default(now()) @db.Timestamp(6)
   updatedAt    DateTime       @default(now()) @db.Timestamp(6)
@@ -16,17 +16,17 @@ model cart {
 }
 
 model cart_product {
-  id           Int     @id @default(autoincrement())
+  id           String     @id @default(cuid())
   productCount Int     @default(1)
-  cartId       Int
-  productId    Int
+  cartId       String
+  productId    String
   cart         cart    @relation(fields: [cartId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   product      product @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   @@unique([cartId, productId])
 }
 
 model product {
-  id           Int            @id @default(autoincrement())
+  id           String            @id @default(cuid())
   caption      String         @db.VarChar
   price        Decimal        @db.Decimal
   slug         String         @db.VarChar
@@ -40,7 +40,7 @@ model product {
 }
 
 model user {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(cuid())
   username  String   @unique @db.VarChar
   email     String   @unique @db.VarChar
   password  String   @db.VarChar

@@ -15,7 +15,8 @@
       "invalidPassword": "Invalid password",
       "password": "Password must be 8 letter",
       "rePassword": "Passwords must be same",
-      "email": "Email format is not correct"
+      "email": "Email format is not correct",
+      "duplicateUser": "User is already registered"
     }
   }
 }
