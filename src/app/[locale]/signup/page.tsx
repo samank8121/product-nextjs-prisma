@@ -2,45 +2,40 @@
 
 import React, { useState } from 'react';
 import styles from './page.module.css';
+import { useLocale, useTranslations } from 'next-intl';
 import Input from '@/components/input/input';
 import Button from '@/components/button/button';
 import { useRouter } from 'next/navigation';
-import { queryKeys } from '@/shared/constant';
 import { fetchUtil } from '@/shared/utils/fetch-util';
-import commonQueryClient from '@/shared/get-query-client';
-import { useQuery } from '@tanstack/react-query';
-import { AuthInfo } from '@/types/auth-info';
-import { useLocale, useTranslations } from 'next-intl';
 import { getFieldErrorsAsString } from '@/shared/utils/get-field-errors';
-import Link from 'next/link';
+import commonQueryClient from '@/shared/get-query-client';
+import { queryKeys } from '@/shared/constant';
 
-export default function Login() {
+export default function Signup() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [confirmation, setConfirmation] = useState('');
+   const [error, setError] = useState('');
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations('Login');
 
-  const { data: auth } = useQuery<AuthInfo>({
-    queryKey: [queryKeys.authInfo],
-  });
-  
-  if (auth && auth.token) {
-    router.push('/');
-  }
-
-  const onLogin = async () => {
-    const data = { username, password };
+  const onSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
+      const data = { username, email, password, confirmation };
       const response = await fetchUtil(
-        `${process.env.NEXT_PUBLIC_API_ADDRESS}auth/login`,
+        `${process.env.NEXT_PUBLIC_API_ADDRESS}auth/signup`,
         { method: 'POST', data, locale }
       );
       const responseJson = await response.json();
       if (response.ok) {
-        commonQueryClient.setQueryData([queryKeys.authInfo], responseJson);
-        router.push('/');
+        setError('');
+        if (responseJson.token) {
+          commonQueryClient.setQueryData([queryKeys.authInfo], responseJson);
+          router.push('/');          
+        }
       } else {
         if (responseJson.error && responseJson.error.fieldErrors) {
           setError(getFieldErrorsAsString(responseJson.error));
@@ -48,35 +43,45 @@ export default function Login() {
           setError(responseJson.error);
         }
       }
-    } catch {
-      setError('error');
+    } catch (error: any) {
+      console.error(error);
     }
   };
   return (
-    <div className={styles.login}>
-      <div className={styles.container}>
+    <div className={styles.signup}>
+      <form className={styles.container} onSubmit={onSignup}>
         <Input
           label={t('username')}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <Input
+          label={t('email')}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
           label={t('password')}
-          value={password}
           type='password'
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        {error && (
+        <Input
+          label={t('rePassword')}
+          type='password'
+          value={confirmation}
+          onChange={(e) => setConfirmation(e.target.value)}
+        />
+         {error && (
           <div
             className={styles.error}
             dangerouslySetInnerHTML={{ __html: error }}
           />
         )}
-        <Link href='./signup'>{t('signUp')}</Link>
-        <Button className={styles.loginBtn} onClick={onLogin}>
-          {t('login')}
+        <Button type='submit' className={styles.loginBtn}>
+          {t('signUp')}
         </Button>
-      </div>
+      </form>
     </div>
   );
 }

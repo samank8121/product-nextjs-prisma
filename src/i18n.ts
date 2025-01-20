@@ -7,6 +7,7 @@ export default getRequestConfig(async ({ locale }) => {
   if (!locales.includes(locale as any)) notFound();
   const messages = {
     ...(await import(`../content/${locale}/home.json`)).default,
+    ...(await import(`../content/${locale}/auth.json`)).default,
     ...(await import(`../content/${locale}/product.json`)).default,
     ...(await import(`../content/${locale}/chat.json`)).default,
     ...(await import(`../content/${locale}/cart.json`)).default,

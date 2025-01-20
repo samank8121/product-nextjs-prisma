@@ -15,7 +15,8 @@
       "invalidPassword": "Ungültiges Passwort",
       "password": "Das Passwort muss aus 8 Buchstaben bestehen",
       "rePassword": "Passwörter müssen gleich sein",
-      "email": "E-Mail-Format ist nicht korrekt"
+      "email": "E-Mail-Format ist nicht korrekt",
+      "duplicateUser": "Benutzer ist bereits registriert"
     }
   }
 }
