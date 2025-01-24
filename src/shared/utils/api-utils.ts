@@ -18,5 +18,5 @@ export function errorResponse(error: string | object, status: number = 500) {
   return jsonResponse({ error }, status);
 }
 export function getDomain(locale: string, slug: string) {
-  return `${process.env.DOMAIN}${locale}/${slug}`;
+  return `${process.env.DOMAIN}${locale}/product/${slug}`;
 }

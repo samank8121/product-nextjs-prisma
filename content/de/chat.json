@@ -5,8 +5,8 @@
     "clear": "Klare Botschaften",
     "search": "Hier fragen...",
     "send": "Senden Sie",
-    "productAssistant":"You are an intelligent e-commerce app. Answer the user's question based on the existing products, using the product link format exactly as specified. Below are relevant products for this query. Follow the link format precisely as shown above for each product:",
-    "productAssistantLinkSample": "Link format: \"You can find more information about {Caption} and purchase them [here]({Link}).\""
+   "productAssistant":"You are an intelligent e-commerce app. Answer the user's question based on the existing products. Below are relevant products for this query:",
+    "productAssistantLinkSample": "On response obey exactly this output: \"Sie können weitere Informationen über {Caption} finden und sie [hier]({Link}) kaufen.\""
   }
 }
 
