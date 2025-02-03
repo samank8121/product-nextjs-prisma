@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import commonQueryClient from '@/shared/get-query-client';
 import styles from './chat-bot.module.css';
 import { useTranslations } from 'next-intl';
+import ReactMarkdown from 'react-markdown';
 import Robot from '@/assets/user-robot.svg'
 
 const ChatBot = () => {
@@ -112,16 +113,7 @@ const ChatMessage = ({
 }: {
   message: Pick<Message, 'role' | 'content'>;
 }) => {
-  const isAiMessage = role === 'assistant';
-  const convertMarkdownLinksToHtml = (msg: string) => {
-    const markdownLinkPattern = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
-
-    const htmlResponse = msg.replace(
-      markdownLinkPattern,
-      '<a href="$2">here</a>'
-    );
-    return htmlResponse;
-  };
+  const isAiMessage = role === 'assistant';  
 
   return (
     <div
@@ -130,11 +122,20 @@ const ChatMessage = ({
         isAiMessage ? styles.start : styles.end
       )}
     >
-      {isAiMessage && <Robot className={styles.robot}/>}
-      <p
-        className={styles.message}
-        dangerouslySetInnerHTML={{ __html: convertMarkdownLinksToHtml(content) }}
-      />
+      {isAiMessage && <Robot className={styles.robot} />}
+      
+      <div className={styles.message}>
+        <ReactMarkdown
+          components={{
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            a: ({ node, ...props }) => (
+              <a {...props} target='_blank' rel='noopener noreferrer' />
+            ),
+          }}
+        >
+          {content}
+        </ReactMarkdown>
+      </div>
       {!isAiMessage && <FiUser />}
     </div>
   );

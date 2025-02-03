@@ -6,7 +6,7 @@
     "search": "Hier fragen...",
     "send": "Senden Sie",
    "productAssistant":"You are an intelligent e-commerce app. Answer the user's question based on the existing products. Below are relevant products for this query:",
-    "productAssistantLinkSample": "On response obey exactly this output: \"Sie können weitere Informationen über {Caption} finden und sie [hier]({Link}) kaufen.\""
+    "productAssistantLinkSample": "On response obey exactly this output: \"Caption\": \"Description\" \n \"Sie können weitere Informationen über \"Caption\" finden und sie [hier](\"Link\") kaufen.\""
   }
 }
 

@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       .namespace('product-ns')
       .query({
         vector: embedding,
-        topK: 6,
+        topK: 2,
       });
 
     const relevantProducts = await prisma.product.findMany({
@@ -55,7 +55,6 @@ export async function POST(request: NextRequest) {
           )
           .join('\n\n') + tchat('productAssistantLinkSample'),
     };
-
     const result = await streamText({
       model: openai('gpt-3.5-turbo'),
       messages: [systemMessage, ...messagesTruncated],
