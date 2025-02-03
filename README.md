@@ -1,5 +1,8 @@
 ## Project OverView
-This project is a sample application built with Next.js 14.2.9. It demonstrates how to display a list of products in multiple languages. which product's description and rate are indexed to find by chatbots
+This project is a multilingual sample application built with Next.js 14. It demonstrates how to display a list of products. It also includes login and signup functionality with JWT authentication. The application provides product details and a cart for adding products. Additionally, it features chatbots that answer user queries about products using LangChain, OpenAI, and Pinecone.
+
+## Demo of Project
+[Watch the video](https://www.linkedin.com/posts/samankefayatpour_ecommerce-ai-chatbot-activity-7262047243799592960-G15o?utm_source=share&utm_medium=member_desktop)
 
 ## Front-end
 - TanStack Query(React Query) for state management and caching.
@@ -10,12 +13,9 @@ This project is a sample application built with Next.js 14.2.9. It demonstrates 
 
 ## Backend
 - Nextjs Route Handler as api
-- OpenAI for embeding and pinecone for saving as vector
+- LangChain, OpenAI and pinecone
 - Prisma as ORM
 - PostgreSql as Db
-
-## Video
-[Watch the video](https://www.linkedin.com/posts/samankefayatpour_ecommerce-ai-chatbot-activity-7262047243799592960-G15o?utm_source=share&utm_medium=member_desktop)
 
 ## Getting Started
 1. create .env file with these keys:
