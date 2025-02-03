@@ -1,20 +1,29 @@
 import prisma from '@/shared/data/prisma';
 import { NextRequest } from 'next/server';
 import { getEmbedding } from '@/shared/utils/openai';
-import { productIndex } from '@/shared/data/pinecone';
-import { streamText } from 'ai';
-import { openai } from '@ai-sdk/openai';
-import { 
-  getTranslationForNamespace, 
+import { pineconeStore } from '@/shared/data/pinecone';
+import {
+  getTranslationForNamespace,
   errorResponse,
   getLocaleFromRequest,
-  getDomain
+  getDomain,
 } from '@/shared/utils/api-utils';
+import { ChatOpenAI } from '@langchain/openai';
+import {
+  AIMessage,
+  HumanMessage,
+  SystemMessage,
+} from '@langchain/core/messages';
+import { LangChainAdapter } from 'ai';
 
 export interface Message {
   role: 'user' | 'assistant' | 'system';
   content: string;
 }
+const chatModel = new ChatOpenAI({
+  modelName: 'gpt-3.5-turbo',
+  streaming: true,
+});
 
 export async function POST(request: NextRequest) {
   const locale = getLocaleFromRequest(request);
@@ -29,41 +38,42 @@ export async function POST(request: NextRequest) {
       messagesTruncated.map((message) => message.content).join('\n')
     );
 
-    const vectorQueryResponse = await productIndex
-      .namespace('product-ns')
-      .query({
-        vector: embedding,
-        topK: 2,
-      });
-
+    const vectorQueryResponse =
+      await pineconeStore.similaritySearchVectorWithScore(embedding, 2);
     const relevantProducts = await prisma.product.findMany({
       where: {
         slug: {
-          in: vectorQueryResponse.matches.map((match) => match.id),
+          in: vectorQueryResponse.map(([match]) => match.id ?? ''),
         },
       },
     });
+    const systemContent =
+      tchat('productAssistant') +
+      relevantProducts
+        .map(
+          (product) =>
+            `Caption: ${product.caption}\n\nRate: ${
+              product.rate
+            }\n\nDescription: ${product.description}\n\nLink: ${getDomain(
+              locale,
+              product.slug
+            )}`
+        )
+        .join('\n\n') +
+      tchat('productAssistantLinkSample');
 
-    const systemMessage: Message = {
-      role: 'system',
-      content:
-        tchat('productAssistant') +
-        relevantProducts
-          .map(
-            (product) =>
-              `Caption: ${product.caption}\n\nRate: ${product.rate}\n\nDescription: ${product.description}\n\nLink: ${getDomain(locale, product.slug)}`
-          )
-          .join('\n\n') + tchat('productAssistantLinkSample'),
-    };
-    const result = await streamText({
-      model: openai('gpt-3.5-turbo'),
-      messages: [systemMessage, ...messagesTruncated],
-    });
-
-    return result.toDataStreamResponse();
+    const langChainMessages = [
+      new SystemMessage({ content: systemContent }),
+      ...messagesTruncated.map((msg) =>
+        msg.role === 'user'
+          ? new HumanMessage({ content: msg.content })
+          : new AIMessage({ content: msg.content })
+      ),
+    ];
+    const stream = await chatModel.stream(langChainMessages);
+    return LangChainAdapter.toDataStreamResponse(stream);
   } catch (error) {
     console.error(error);
     return errorResponse(te('errorOccured'));
   }
 }
-
