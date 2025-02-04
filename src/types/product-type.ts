@@ -1,6 +1,6 @@
 export type GetProductsType = { products: ProductType[] };
 export type ProductType = {
-  id: number;
+  id: string;
   slug: string;
   caption: string;
   imageSrc: string;

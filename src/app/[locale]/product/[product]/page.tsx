@@ -28,7 +28,7 @@ export default function Product({
     },
   });
 
-  const onChangeProduct = (productid: number, value: number) => {
+  const onChangeProduct = (productid: string, value: number) => {
     changeProduct(productid, value);
   };
 

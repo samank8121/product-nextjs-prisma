@@ -40,7 +40,7 @@ const CartModal = () => {
   if (!(cartModal && cartModal.open)) {
     return null;
   }
-  const onChangeProduct = (productid: number, value: number) => {
+  const onChangeProduct = (productid: string, value: number) => {
     changeProduct(productid, value);
   };
   return (
@@ -62,7 +62,7 @@ const CartModal = () => {
       {carts &&
         carts.products && products &&
         Object.entries(carts.products).map((p) => {
-          const currProductId = Number(p[0]);
+          const currProductId = p[0];
           const productInfo = products?.products.filter(
             (product) => product.id === currProductId
           );

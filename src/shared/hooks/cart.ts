@@ -7,16 +7,23 @@ import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import { AuthInfo } from '@/types/auth-info';
 import { useEffect } from 'react';
+import Cookies from "js-cookie";
 
 export const useCart = () => {
   const router = useRouter();
   const locale = useLocale();
   const { data: auth } = useQuery<AuthInfo>({
     queryKey: [queryKeys.authInfo],
+    queryFn: () => {
+      const token = Cookies.get('token');
+      return {
+        token: token ?? "",
+      };
+    },
   });
   const { data: carts, refetch } = useQuery<CartType>({
     queryKey: [queryKeys.cart],
-    queryFn: async () => {
+    queryFn: async () => {      
       if (auth && auth.token) {
         const response = await fetchUtil(
           `${process.env.NEXT_PUBLIC_API_ADDRESS}cart`,
@@ -37,7 +44,7 @@ export const useCart = () => {
     }
   }, [auth, refetch]);
 
-  const changeProduct = async (productid: number, value: number) => {
+  const changeProduct = async (productid: string, value: number) => {
     if (!(auth && auth.token)) {
       router.push(`/${locale}/login`);
     }
@@ -79,7 +86,7 @@ export const useCart = () => {
     }
     return false;
   };
-  const getProductCount = (productid: number): number => {
+  const getProductCount = (productid: string): number => {
     if (carts && carts.products) {
       const result = Object.entries(carts.products).filter(
         (key) => key[0].toString() === productid.toString()

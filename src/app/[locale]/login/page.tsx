@@ -13,6 +13,7 @@ import { AuthInfo } from '@/types/auth-info';
 import { useLocale, useTranslations } from 'next-intl';
 import { getFieldErrorsAsString } from '@/shared/utils/get-field-errors';
 import Link from 'next/link';
+import Cookies from "js-cookie";
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -40,6 +41,7 @@ export default function Login() {
       const responseJson = await response.json();
       if (response.ok) {
         commonQueryClient.setQueryData([queryKeys.authInfo], responseJson);
+        Cookies.set('token', responseJson.token);
         router.push('/');
       } else {
         if (responseJson.error && responseJson.error.fieldErrors) {
