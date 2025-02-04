@@ -1,18 +1,23 @@
 import prisma from '@/shared/data/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/shared/utils/auth';
-import { errorResponse, jsonResponse } from '@/shared/utils/api-utils';
+import {
+  errorResponse,
+  getTranslationForNamespace,
+  jsonResponse,
+} from '@/shared/utils/api-utils';
 import { CartType } from '@/types/cart-type';
 
 export async function GET(request: NextRequest) {
-  const authResult = auth(request);
+  const te = await getTranslationForNamespace(request, 'Error');
+  const authResult = await auth(request);
   if (authResult instanceof NextResponse) {
     return authResult;
   }
 
   const { userId } = authResult;
   if (!userId) {
-    return errorResponse('Please log in', 401);
+    return errorResponse(te('login'), 401);
   }
   const response = await prisma.cart.findFirst({
     where: { userId },
@@ -28,7 +33,7 @@ export async function GET(request: NextRequest) {
     products: {},
     totalCount: 0,
   };
-  if (response) { 
+  if (response) {
     response.cart_product.forEach((item) => {
       cart.products[item.productId] = item.productCount;
       cart.totalCount += item.productCount;
@@ -37,8 +42,9 @@ export async function GET(request: NextRequest) {
   return jsonResponse(cart);
 }
 export async function POST(request: NextRequest) {
+  const te = await getTranslationForNamespace(request, 'Error');
   try {
-    const authResult = auth(request);
+    const authResult = await auth(request);
     if (authResult instanceof NextResponse) {
       return authResult;
     }
@@ -46,18 +52,15 @@ export async function POST(request: NextRequest) {
     const { userId } = authResult;
 
     if (!userId) {
-      return errorResponse(
-        "Can't add product to cart without logging in.",
-        401
-      );
+      return errorResponse(te('login'), 401);
     }
 
-    const { productId, count } = await request.json();    
+    const { productId, count } = await request.json();
     const result = await prisma.$transaction(async (tx) => {
       const cart = await getOrCreateCart(tx, userId);
       const product = await getProduct(tx, productId);
       if (!product) {
-        throw new Error('Product not found');
+        throw new Error(te('productNotFound'));
       }
 
       await updateCartProduct(tx, cart.id, productId, count);
@@ -69,7 +72,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error changing product in cart:', error);
     return errorResponse(
-      'An error occurred while changing the product in the cart'
+      te('cartChange')
     );
   }
 }
@@ -81,7 +84,7 @@ async function getOrCreateCart(tx: any, userId: string) {
   });
   if (!cart) {
     cart = await tx.cart.create({
-      data: { userId},
+      data: { userId },
     });
   }
 
