@@ -5,6 +5,12 @@
       "somethingWrong":"Something wrong. Please try again.",
       "itemNotExists": "Item not exists",
       "notAuthorized": "You are not an admin",
-      "notLogin": "You are not login"
+      "notLogin": "You are not logged in yet",
+      "authMissing":"Authorization header missing",
+      "authInvalid":"Invalid token",
+      "authTokenNotSet":"TOKEN_SECRET_KEY is not set",
+      "login": "Please login",
+      "productNotFound": "Product not found",
+      "cartChange":"An error occurred while changing the product in the cart"
   }
 }

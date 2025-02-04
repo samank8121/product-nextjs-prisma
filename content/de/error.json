@@ -4,7 +4,13 @@
       "internalError": "Interner Serverfehler",
       "somethingWrong":"Etwas ist falsch. Bitte versuchen Sie es erneut.",
       "itemNotExists": "Artikel nicht vorhanden",
-      "notAuthorized": "You are not an admin",
-      "notLogin": "You are not login"
+      "notAuthorized": "Sie sind kein Administrator",
+      "notLogin": "Sie sind noch nicht eingeloggt",
+      "authMissing":"Autorisierungs-Header fehlt",
+      "authInvalid":"Ungültiges Token",
+      "authTokenNotSet":"TOKEN_SECRET_KEY ist nicht gesetzt",
+      "login": "Bitte anmelden",
+      "productNotFound": "Produkt nicht gefunden",
+      "cartChange":"Beim Ändern des Produkts im Warenkorb ist ein Fehler aufgetreten"
   }
 }

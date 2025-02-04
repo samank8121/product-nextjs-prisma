@@ -111,7 +111,7 @@ export async function DELETE(request: NextRequest) {
 
 const checkAdmin = async (request: NextRequest) => {
   const te = await getTranslationForNamespace(request, 'Error');
-  const authResult = auth(request);
+  const authResult = await auth(request);
   if (authResult instanceof NextResponse) {
     return authResult;
   }
