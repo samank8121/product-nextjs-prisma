@@ -1,7 +1,7 @@
 import prisma from '@/shared/data/prisma';
 import { createProductSchema } from '@/shared/validation/product';
 import { NextRequest } from 'next/server';
-import { productIndex } from '@/shared/data/pinecone';
+import { pineconeStore } from '@/shared/data/pinecone';
 import { getEmbedding } from '@/shared/utils/openai';
 import { getTranslationForNamespace, jsonResponse, errorResponse } from '@/shared/utils/api-utils';
 
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
         data: { caption, price, slug, weight, rate, description, imageSrc },
       });
 
-      await productIndex.namespace('product-ns').upsert([
+      await pineconeStore.pineconeIndex.upsert([
         { id: product.slug, values: embedding },
       ]);
 
@@ -79,7 +79,7 @@ export async function DELETE(request: NextRequest) {
     const productResult = await prisma.$transaction(async (tx) => {
       const product = await tx.product.delete({ where: { id: existingProduct.id } });
 
-      await productIndex.namespace('product-ns').deleteOne(product.slug);
+      await pineconeStore.pineconeIndex.deleteOne(product.slug);
 
       return product;
     });
