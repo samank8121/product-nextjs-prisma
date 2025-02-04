@@ -3,6 +3,8 @@
       "errorOccured": "An error occurred",
       "internalError": "Internal server error",
       "somethingWrong":"Something wrong. Please try again.",
-      "itemNotExists": "Item not exists"
+      "itemNotExists": "Item not exists",
+      "notAuthorized": "You are not an admin",
+      "notLogin": "You are not login"
   }
 }
