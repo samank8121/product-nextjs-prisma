@@ -55,7 +55,6 @@ export async function POST(request: NextRequest) {
     const { productId, count } = await request.json();    
     const result = await prisma.$transaction(async (tx) => {
       const cart = await getOrCreateCart(tx, userId);
-      console.log('cart', cart);
       const product = await getProduct(tx, productId);
       if (!product) {
         throw new Error('Product not found');
@@ -75,14 +74,14 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function getOrCreateCart(tx: any, userId: number) {
+async function getOrCreateCart(tx: any, userId: string) {
   let cart = await tx.cart.findFirst({
     where: { userId },
     include: { cart_product: true },
   });
   if (!cart) {
     cart = await tx.cart.create({
-      data: { userId: userId },
+      data: { userId},
     });
   }
 

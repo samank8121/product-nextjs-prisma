@@ -9,7 +9,7 @@ datasource db {
 
 model cart {
   id           String            @id @default(cuid())
-  userId       Int
+  userId       String
   createdAt    DateTime       @default(now()) @db.Timestamp(6)
   updatedAt    DateTime       @default(now()) @db.Timestamp(6)
   cart_product cart_product[]
@@ -38,13 +38,17 @@ model product {
   updatedAt    DateTime       @default(now()) @db.Timestamp(6)
   cart_product cart_product[]
 }
-
+enum role {
+    ADMIN
+    USER
+}
 model user {
   id        String      @id @default(cuid())
   username  String   @unique @db.VarChar
   email     String   @unique @db.VarChar
   password  String   @db.VarChar
   cartId    String?  @db.VarChar
+  role      role?     @default(USER)
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @default(now()) @db.Timestamp(6)
 }
