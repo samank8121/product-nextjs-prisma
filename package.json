@@ -10,7 +10,7 @@
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --cache --cache-location .eslintcache --cache-strategy content",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "jest",
+    "test": "jest --watch --no-cache",
     "cypress:open": "cypress open"
   },
   "dependencies": {

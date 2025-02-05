@@ -1,6 +1,6 @@
 import { describe, it, expect } from '@jest/globals';
 import { render, fireEvent } from '@testing-library/react';
-import React from 'react';
+import React, { useState } from 'react';
 
 import IncreaseDecrease from './increase-decrease';
 
@@ -21,10 +21,13 @@ describe('IncreaseDecrease Component', () => {
   });
 
   it('increments and decrements the value', () => {
-    const { getByText, getByRole, getByTestId } = render(
-      <IncreaseDecrease addBtnText="Add" />
-    );
-    const addBtn = getByRole('button', { name: 'Add' });
+    const Wrapper = () => {
+      const [value, setValue] = useState(0);
+      return <IncreaseDecrease addBtnText="Add" value={value} onChange={setValue} />;
+    };
+  
+    const { getByTestId, getByText } = render(<Wrapper />);
+    const addBtn = getByTestId('add');
     // Click the "Add" button and check if the value increases
     fireEvent.click(addBtn);
     expect(getByText('1')).toBeTruthy();

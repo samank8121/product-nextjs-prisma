@@ -38,6 +38,7 @@ const IncreaseDecrease: React.FC<IncreaseDecreaseProps> = ({
         <Button
           size="l"
           name="Add"
+          data-testid="add"
           data-test="increase-decrease-add"
           className={clsx(styles.addBtn, { [styles.addBtnText]: addBtnText })}
           onClick={() => {

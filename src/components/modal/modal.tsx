@@ -65,6 +65,7 @@ const Modal: React.FC<ModalProps & PropsWithChildren> = ({
                   <div className={styles.modalCloseContainer}>
                     <button
                       type='button'
+                      data-testid="close-button"
                       className={styles.modalClose}
                       onClick={handleModalClose}
                     >
