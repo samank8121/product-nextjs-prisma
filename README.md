@@ -40,4 +40,4 @@ $ yarn cypress:open
 $ yarn storybook
 ```
 ## Author
-- [Saman Kefayatpour](https://www.linkedin.com/in/samankefayatpour/)
+[Saman Kefayatpour](https://www.linkedin.com/in/samankefayatpour/)
