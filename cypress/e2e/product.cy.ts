@@ -17,7 +17,7 @@ describe('Product Page', () => {
     }).as('getProduct');
     
     // Visit the product page
-    cy.visit('/en/test');
+    cy.visit('/en/product/test');
     cy.wait('@getProduct')
   });
 

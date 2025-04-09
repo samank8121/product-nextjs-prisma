@@ -39,3 +39,6 @@ $ yarn cypress:open
 ```bash
 $ yarn storybook
 ```
+
+## Author
+- [Saman Kefayatpour](https://www.linkedin.com/in/samankefayatpour/)
